@@ -1,3 +1,24 @@
+# About this fork
+
+This fork includes additional features regarding variable expansion and Windows support.
+
+One can use it setting up a dependency to `python-dotenv @ git+https://github.com/Bajron/python-dotenv.git@v1.1.0`
+
+Note **this is not the official package**, and this branch is not a good way to track dependencies.
+I set it up mostly for my own usage.
+
+This branch (`v1.1.0`) should not ever be proposed as a pull request to the upstream
+because it contains modified version and irrelevant changes in the README file.
+
+Branches description
+* `v1.1.0` (this branch) contains bumped version, so it takes precendence over the official one when used as dependency
+* [`expansions-improvements-windows`](https://github.com/Bajron/python-dotenv/tree/expansions-improvements-windows)
+Initial changes considering Windows and expansions
+* [`string-expansion`](https://github.com/Bajron/python-dotenv/tree/string-expansion)
+More bash-like handling of strings, based on my initial changes.
+* [`windows-ci`](https://github.com/Bajron/python-dotenv/tree/windows-ci) Enables testing on Windows
+* `main` branch compiles all my changes
+
 # python-dotenv
 
 [![Build Status][build_status_badge]][build_status_link]
@@ -244,8 +265,8 @@ This project is currently maintained by [Saurabh Kumar](https://saurabh-kumar.co
 without the support of these [awesome
 people](https://github.com/theskumar/python-dotenv/graphs/contributors).
 
-[build_status_badge]: https://github.com/theskumar/python-dotenv/actions/workflows/test.yml/badge.svg
-[build_status_link]: https://github.com/theskumar/python-dotenv/actions/workflows/test.yml
+[build_status_badge]: https://github.com/Bajron/python-dotenv/actions/workflows/test.yml/badge.svg
+[build_status_link]: https://github.com/Bajron/python-dotenv/actions/workflows/test.yml
 [pypi_badge]: https://badge.fury.io/py/python-dotenv.svg
 [pypi_link]: https://badge.fury.io/py/python-dotenv
 [python_streams]: https://docs.python.org/3/library/io.html
