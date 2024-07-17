@@ -1,10 +1,8 @@
 import json
 import os
 import shlex
-import shutil
 import sys
 from contextlib import contextmanager
-from subprocess import Popen
 from typing import Any, Dict, IO, Iterator, Tuple
 
 try:
@@ -162,15 +160,15 @@ def run(ctx: click.Context, override: bool, commandline: Tuple[str, ...]) -> Non
     if not commandline:
         click.echo('No command given.')
         exit(1)
-    ret = run_command(commandline, dotenv_as_dict)
-    exit(ret)
+    run_command(commandline, dotenv_as_dict)
 
 
-def run_command(command: Tuple[str, ...], env: Dict[str, str]) -> int:
-    """Run command in sub process.
+def run_command(command: Tuple[str, ...], env: Dict[str, str]) -> None:
+    """Replace the current process with the specified command.
 
-    Runs the command in a sub process with the variables from `env`
-    added in the current environment variables.
+    Replaces the current process with the specified command
+    and the variables from `env` added in the current environment variables.
+    The command is looked up in PATH environement variable (see os.execvpe).
 
     Parameters
     ----------
@@ -181,8 +179,8 @@ def run_command(command: Tuple[str, ...], env: Dict[str, str]) -> int:
 
     Returns
     -------
-    int
-        The return code of the command
+    None
+        This function does not return any value. It replaces the current process with the new one.
 
     """
     # copy the current environment variables and add the vales from
@@ -190,16 +188,4 @@ def run_command(command: Tuple[str, ...], env: Dict[str, str]) -> int:
     cmd_env = os.environ.copy()
     cmd_env.update(env)
 
-    # Resolve path in a consistent way
-    app = shutil.which(command[0])
-    if app is not None:
-        command = (app,) + command[1:]
-
-    p = Popen(command,
-              universal_newlines=True,
-              bufsize=0,
-              shell=False,
-              env=cmd_env)
-    _, _ = p.communicate()
-
-    return p.returncode
+    os.execvpe(command[0], args=command, env=cmd_env)
